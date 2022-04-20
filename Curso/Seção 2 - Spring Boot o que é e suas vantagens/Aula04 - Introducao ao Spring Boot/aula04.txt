@@ -1,0 +1,11 @@
+Introdução ao Spring Boot: O que é, quando e porque surgiu.
+
+Spring Boot: Principais motivações:
+
+- Criado em 2012.
+- Facilita setup de projetos com Spring.
+- Setup simplicado - pronto para codificar.
+- Facilidade de configurações - starters.
+- Configuração simplificada - AutoConfiguration.
+- Desenvolvimento de microsserviços.
+- Escalável na nuvem.
