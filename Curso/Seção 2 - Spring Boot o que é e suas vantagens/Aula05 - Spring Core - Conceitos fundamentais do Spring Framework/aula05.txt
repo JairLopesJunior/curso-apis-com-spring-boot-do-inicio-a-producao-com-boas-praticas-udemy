@@ -1,0 +1,15 @@
+Spring Core: Conceitos fundamentais do Spring Framework
+
+Spring Framework: Principais características:
+
+- Inversão de Controle.
+- Injeção de Dependências.
+
+
+
+Core Container:
+
+- Beans: Responsável por criar e gerenciar os Spring Beans.
+- Core: Foco em permitir IoC e DI.
+- Context: Como vamos criar as configurações dos nossos Beans.
+- SpEL: É um modulo que define expressões de linguagens.
