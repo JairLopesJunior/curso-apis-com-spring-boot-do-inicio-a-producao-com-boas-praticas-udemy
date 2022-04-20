@@ -1,0 +1,17 @@
+Introdução: Quando surgiu o REST e qual a motivação para a criação?
+
+REST - Quando? Por quê? Como?
+
+- Transferência Representacional de Estado (Representational State Transfer).
+- Criado por Roy Fielding, em 2000.
+- Criado em cima do protocolo HTTP.
+- Padrão Arquitetural.
+
+
+
+REST - Principais caracteristicas:
+
+- Cliente / Servidor.
+- Operações HTTP bem definidas.
+- Operações sem estado - Independentes.
+- Cache de Operações.
