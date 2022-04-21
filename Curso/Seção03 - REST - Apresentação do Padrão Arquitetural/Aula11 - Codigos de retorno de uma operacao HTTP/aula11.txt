@@ -1,0 +1,39 @@
+Códigos de retorno de uma operação HTTP: O que significam cada retorno?
+
+HTTP Status Codes: Tipos de códigos de retorno de operações:
+
+| 1XX
+| INFORMATIONAL
+
+| 2XX
+| SUCCESS
+
+| 3XX
+| REDIRECTION
+
+| 4XX
+| CLIENT ERROR
+
+| 5XX
+| SERVER ERROR
+
+
+
+
+Principais códigos de status HTTP utilizados:
+
+2xx SUCCESS
+- 200 OK
+- 204 No Content
+
+3xx REDIRECT
+- 304 Not Modified
+
+4xx Client Error
+- 400 Bad Request
+- 401 Unauthorized
+- 403 Forbidden
+- 404 Not Found
+
+5xx Server Error
+- 500 Internal Server Error
