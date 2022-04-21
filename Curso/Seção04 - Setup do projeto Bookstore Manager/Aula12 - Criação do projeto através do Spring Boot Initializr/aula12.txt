@@ -1,0 +1,7 @@
+Criação do projeto através do Spring Boot Initializr
+
+
+O Spring Initializr é uma ferramenta disponibilizada pelo Spring Boot para fazer a geração de uma forma muito simplificada
+de projetos com a estrutura do Spring Boot.
+
+Site: start.spring.io
