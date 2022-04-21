@@ -1,0 +1,50 @@
+Verbos do padrão arquitetural REST, e como se relaciona a um sistema
+
+Principais verbos HTTP x Operações REST x Design:
+
+ _________________________________
+| Operation |   SQL   |   HTTP    |
+ --------------------------------- 
+|  Create   | INSERT  | PUT/POST  |
+ ---------------------------------
+|   Read    | SELECT  |   GET     |
+ ---------------------------------
+|  Update   | UPDATE  | PUT/PATCH |
+ ---------------------------------
+|  Delete   | DELETE  |   DELETE  |
+ ---------------------------------
+
+
+
+Principais verbos HTTP x Mapeamento na URI:
+
+ ________________________________________________________________________
+|         URI         |     HTTP Verb     |          Outcome             |
+ ------------------------------------------------------------------------
+| .../api/employees   |        GET        |   Gets list of employees     |
+| .../api/employees/1 |        GET        |  Gets employee with Id = 1   |
+| .../api/employees   |       POST        |   Creates a new employee     |
+| .../api/employees/1 |        PUT        | Updates employee with Id = 1 |
+| .../api/employees/1 |      DELETE       | Deletes employee with Id = 1 |
+ ------------------------------------------------------------------------  
+
+
+
+Todos os verbos HTTP x REST
+
+ ______________________________
+|  METHOD  | Idempotent | Safe |
+|    GET   |     YES    |  YES |
+|   POST   |     NO     |  NO  |
+|    PUT   |     YES    |  NO  |
+|  DELETE  |     YES    |  NO  |
+|   PATCH  |     NO     |  NO  |
+|   HEAD   |     YES    |  YES |
+|  OPTIONS |     YES    |  YES |
+ ------------------------------
+
+
+
+
+
+
