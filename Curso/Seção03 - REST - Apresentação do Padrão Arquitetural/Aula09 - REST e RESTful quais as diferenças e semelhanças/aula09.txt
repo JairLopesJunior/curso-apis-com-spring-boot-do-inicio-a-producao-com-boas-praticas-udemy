@@ -1,0 +1,13 @@
+REST x RESTful: Quais as diferenças e semelhanças entre cada um destes termos?
+
+REST - Padrão Arquitetural: Definições conceituais.
+
+
+
+RESTful - API que está em conformidade com conceitos REST.
+
+- Interface Uniforme
+- Stateless
+- Cacheable
+- Client / Server
+- Versionamento
