@@ -1,0 +1,8 @@
+Adicionando o Spring Boot Actuator ao nosso projeto
+
+Adicionar a seguinte dependência em nosso projeto:
+
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>

@@ -1,0 +1,9 @@
+logging:
+  level:
+    br:
+      com:
+        jairlopes: INFO
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
