@@ -1,0 +1,47 @@
+Inclusão do Swagger como ferramenta de documentação de APIs.
+
+No arquivo pom.xml adicionar duas dependências que são:
+
+<dependency>
+  <groupId>io.springfox</groupId>
+  <artifactId>springfox-swagger2</artifactId>
+  <version>2.9.2</version>
+</dependency>
+
+<dependency>
+  <groupId>io.springfox</groupId>
+  <artifactId>springfox-swagger-ui</artifactId>
+  <version>2.9.2</version>
+</dependency>
+
+
+Ápos adicionar as dependências, criar uma Classe (SwaggerConfig) e anotar com @Configuration e @EnableSwagger2.
+
+Ápos criar os seguintes metodos dentro da Classe:
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.jairlopes.bookstoremanager"))
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(buildApiInfo());
+    }
+
+    private ApiInfo buildApiInfo() {
+        return new ApiInfoBuilder()
+                .title("Bookstore Manager Course")
+                .description("Bookstore Manager API Professional")
+                .version("1.0.0")
+                .contact(new Contact("Jair Lopes Junior", "https://github.com/JairLopesJunior", "jair.lopes@fatec.sp.gov.br"))
+                .build();
+    }
+
+
+Ápos isso ir na Controller e adicionar as seguintes anotações em cada metodo:
+
+@ApiOperation(value = "") // Aqui voce adiciona uma descrição do que o metodo ira fazer.
+@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Sucess method return")
+})
