@@ -1,0 +1,30 @@
+Principais informações que conseguimos obter com o Actuator
+
+Spring Boot Actuator 2.x - Principais EndPoints (Não Visíveis)
+
+Podemos adicionar ou remover estes EndPoints:
+
+- /auditevents
+- /beans
+- /loggers
+- /configprops
+
+Adicionando o seguinte comando no arquivo application.properties:
+
+management.endpoints.web.exposure.include=auditevents,beans,configprops
+management.endpoints.web.exposure.exclude=auditevents,beans,configprops
+
+Se caso quiser adicionar todos os EndPoints utilizar este comando:
+
+management.endpoints.web.exposure.include=*
+
+
+
+Também temos o EndPoint (Por padrão vem desabilitado):
+
+- /shutdown
+
+Ao acessar este EndPoint ele derruba o projeto, segue o comando para adicionar no application.properties:
+
+management.endpoint.shutdown.enabled=true
+
