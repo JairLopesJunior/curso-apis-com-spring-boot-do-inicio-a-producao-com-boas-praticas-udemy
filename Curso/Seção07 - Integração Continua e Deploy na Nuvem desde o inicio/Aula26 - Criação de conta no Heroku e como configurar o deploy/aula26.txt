@@ -1,0 +1,7 @@
+Criação de conta no Heroku e como configurar o deploy automatizado do projeto
+
+Por padrão o Heroku executa com o Java 8 podemos alterar isso criando o seguinte arquivo na raiz do projeto:
+
+Nome do Arquivo: system.properties
+
+Conteudo do arquivo: java.runtime.version=14
