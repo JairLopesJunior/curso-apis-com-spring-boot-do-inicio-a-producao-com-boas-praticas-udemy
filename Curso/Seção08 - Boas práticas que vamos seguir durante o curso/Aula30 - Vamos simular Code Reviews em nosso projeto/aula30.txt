@@ -1,0 +1,30 @@
+Vamos simular Code Reviews em nosso projeto
+
+
+Passos para criar um template de PR (Pull Request):
+
+Na raiz do projeto criar o seguinte arquivo:
+
+pull_request_template.md
+
+Adicionar o seguinte conteudo dentro do arquivo:
+
+## Status
+**READY/IN DEVELOPMENT/HOLD**
+
+## Description
+A few sentences describing the overall goals of the pull request's commits.
+
+## Todos
+- [ ] Tests
+- [ ] Documentation
+
+## Deploy Notes
+Notes regarding deployment the contained body of work. These should note anv db migrations, etc.
+
+## Steps to Test or Reproduce
+Outline the steps to test or reproduce the PR here.
+
+```
+mvn spring-boot:run
+```
