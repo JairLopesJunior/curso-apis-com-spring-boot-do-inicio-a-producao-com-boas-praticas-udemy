@@ -1,0 +1,47 @@
+Como customizar endpoints já existentes do Spring Boot Actuator
+
+Customização do EndPoint /info
+
+
+
+
+No arquivo application.properties adicionar as seguintes configurações:
+
+info.app.name=@project.name@
+info.app.groupId=@project.groupId@
+info.app.artifactId=@project.artifactId@
+info.app.version=@project.version@
+
+Segue os passos para configurar o ultimo commit do GitHub e também a branch que está o projeto:
+
+No arquivo pom.xml:
+<plugin>
+  <groupId>pl.project13.maven</groupId>
+  <artifactId>git-commit-id-plugin</artifactId>
+</plugin>
+
+No arquivo application.properties:
+management.info.git.mode=simple
+
+Criar a seguinte Classe:
+
+@Component
+@EndpointWebExtension(endpoint = InfoEndpoint.class)
+public class InfoWebPointExtension {
+
+    @Autowired
+    private InfoEndpoint delegate;
+
+    @ReadOperation
+    public WebEndpointResponse<Map> info() {
+        Map<String, Object> info = this.delegate.info();
+        Integer status = getStatus(info);
+        Map<String, Object> customInfo = new HashMap<>(info);
+        customInfo.put("customInfo", "handOn");
+        return new WebEndpointResponse<>(customInfo, status);
+    }
+
+    private Integer getStatus(Map<String, Object> info) {
+        return 200;
+    }
+}
