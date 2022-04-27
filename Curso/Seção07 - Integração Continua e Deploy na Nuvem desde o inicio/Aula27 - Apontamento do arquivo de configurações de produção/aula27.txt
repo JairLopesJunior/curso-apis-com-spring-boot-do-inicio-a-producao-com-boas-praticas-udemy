@@ -1,0 +1,5 @@
+Apontamento do arquivo de configurações referente á produção no Heroku
+
+No arquivo applications.properties adicionar a seguinte configuração:
+
+spring.profiles.active=prod
