@@ -1,0 +1,48 @@
+Mapeamento do modelo de dados para entidades JPA
+
+@Entity // Para indicar que a Classe é uma entidade.
+
+@Id // Indica a Chave Primária.
+
+@GeneratedValue(strategy= GenerationType.IDENTITY) // A Estrátegia de Geração da Chave Primária.
+
+@Column(
+nullable = false, // Nunca pode ser null.
+unique = true, // Campo deverá ser unico.
+columnDefinition = "integer default 0", // Serve para atribuir valor default para um campo primitivo.
+length = 100, // Tamanho maximo de 100 Caracteres.
+columnDefinition = "TIMESTAMP" // Faz o mapeamento em um campo TIMESTAMP no BD.
+)
+
+@Data // É do Lombok, Um atalho para @ToString, @EqualsAndHashCode,@Getter em todos os campos, e @Setter em todos os campos 
+não-finais. Você ainda pode obter um construtor livre para inicializar seus campos finals!
+
+@AllArgsConstructor // Essa anotação é responsável por gerar um construtor com 1 parâmetro para cada atributo de sua classe. 
+Você pode gerar um construtor para 1 ou mais parâmetros da sua classe de acordo com a sua necessidade.
+
+@Getter // Essa anotação e responsável por criar o getter de cada campo em que ela estiver denotada ou de todos os atributos 
+se a colocamos no nível da classe.
+
+@Enumerated(EnumType.ORDINAL) // Mapeia a ordem dos ENUMS.
+
+@Enumerated(EnumType.STRING) // Mapeia somente a String do ENUM.
+
+@ManyToOne( // Relacionamento N -> 1
+cascade = {CascadeType.NONE, // Não faz nada com o objeto (padrão)
+
+cascade = CascadeType.MERGE, // Atualiza filhos quando atualiza o pai, somente se já estiver persisitido
+
+cascade = CascadeType.PERSIST, // Salva o filho quando salva o pai
+
+cascade = CascadeType.REFRESH, // Salva o pai e mantém o filho sem alterar
+
+cascade = CascadeType.REMOVE, // Remove o filho quando remove o pai e vice-versa
+
+cascade = CascadeType.ALL // Executa todas as operações de cascade
+})
+
+@OneToMany( // Relacionamento 1 -> N
+mappedBy = "author" // "author" é o nome do atributo da Classe que possui a annotação @ManyToOne
+fetch = FetchType.LAZY // É o padrão. Carrega os relacionamentos a menos que você o invoque por meio do método getter.
+fetch = FetchType.EAGER // Carrega todos os relacionamentos.
+)
