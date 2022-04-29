@@ -1,0 +1,36 @@
+Auditoria: Informações sobre data de criação e atualização das entidades
+
+Criar uma Classe Abstrata chamada Auditable com os seguintes atributos:
+
+protected LocalDateTime createdDate;
+protected LocalDateTime lastModifiedDate;
+
+
+
+@MappedSuperClass // É uma classe mapeada que pode ser extendida por qualquer uma das entidades do projeto.
+
+@EntityListeners(AuditingEntityListener.class) // Adicionando um Listener de Auditoria, faz todo o trabalho de auditoria para nós.
+
+@CreatedDate // Ao encontrar esta anotação no momento da criação ele salva a data.
+
+@LastModifiedDate // Ao encontrar esta anotação no momento da criação ele salva a data de modificação.
+
+Depois disto somente precisamos extender as entidades.
+
+
+Ex da Classe:
+
+@Getter
+@Setter
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public abstract class Auditable {
+
+    @CreatedDate
+    @Column(nullable = false)
+    protected LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Column
+    protected LocalDateTime lastModifiedDate;
+}
