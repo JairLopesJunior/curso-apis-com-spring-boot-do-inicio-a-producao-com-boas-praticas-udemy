@@ -1,0 +1,9 @@
+BeanValidation: Biblioteca para validação de dados de entrada dos nossos serviços
+
+
+Adicionar no arquivo pom.xml a seguinte dependência:
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
