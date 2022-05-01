@@ -1,0 +1,24 @@
+Criação da Controller, Service e Mapeamento DTO/Entidade como base do módulo
+
+Criar um package com o nome 'mapper'.
+
+Dentro do package mapper criar uma interface com a seguinte estrutura:
+
+@Mapper
+public interface AuthorMapper {
+
+    AuthorMapper INSTANCE = Mappers.getMapper(AuthorMapper.class);
+
+    Author toModelo(AuthorDTO authorDTO);
+
+    AuthorDTO toDTO(Author author);
+}
+
+
+Exemplo de como realizar a INSTANCIA do AuthorMapper em um Service:
+
+@Service
+public class AuthorService {
+
+    private final static AuthorMapper authorMapper = AuthorMapper.INSTANCE;
+}
