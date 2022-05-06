@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import java.util.Collections;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @ExtendWith(MockitoExtension.class)
@@ -73,7 +75,7 @@ public class AuthorControllerTest {
     }
 
     @Test
-    public void whenGETWithValidIdIdCalledThenStatusOkShouldBeReturned() throws Exception {
+    public void whenGETWithValidIdCalledThenStatusOkShouldBeReturned() throws Exception {
         AuthorDTO expectedFoundAuthorDTO = authorDTOBuilder.buildAuthorDTO();
 
         Mockito.when(service.findById(expectedFoundAuthorDTO.getId()))
@@ -85,6 +87,20 @@ public class AuthorControllerTest {
                 .andExpect(jsonPath("$.id", Is.is(expectedFoundAuthorDTO.getId().intValue())))
                 .andExpect(jsonPath("$.name", Is.is(expectedFoundAuthorDTO.getName())))
                 .andExpect(jsonPath("$.age", Is.is(expectedFoundAuthorDTO.getAge())));
+    }
+
+    @Test
+    public void whenGETListCalledThenStatusOkShouldBeReturned() throws Exception {
+        AuthorDTO expectedFoundAuthorDTO = authorDTOBuilder.buildAuthorDTO();
+
+        Mockito.when(service.findAll()).thenReturn(Collections.singletonList(expectedFoundAuthorDTO));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/authors")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$[0].id", Is.is(expectedFoundAuthorDTO.getId().intValue())))
+                .andExpect(jsonPath("$[0].name", Is.is(expectedFoundAuthorDTO.getName())))
+                .andExpect(jsonPath("$[0].age", Is.is(expectedFoundAuthorDTO.getAge())));
     }
 }
 
