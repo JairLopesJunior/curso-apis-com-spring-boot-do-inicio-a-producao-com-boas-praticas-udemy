@@ -3,6 +3,7 @@ package com.jairlopes.bookstoremanager.service;
 import com.jairlopes.bookstoremanager.dto.AuthorDTO;
 import com.jairlopes.bookstoremanager.entity.Author;
 import com.jairlopes.bookstoremanager.exception.AuthorAlreadyExistsException;
+import com.jairlopes.bookstoremanager.exception.AuthorNotFoundException;
 import com.jairlopes.bookstoremanager.mapper.AuthorMapper;
 import com.jairlopes.bookstoremanager.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class AuthorService {
         Author authorToCreate = authorMapper.toModelo(authorDTO);
         Author createdAuthor = authorRepository.save(authorToCreate);
         return authorMapper.toDTO(createdAuthor);
+    }
+
+    public AuthorDTO findById(Long id) {
+        Author foundAuthor = authorRepository.findById(id)
+                .orElseThrow(() -> new AuthorNotFoundException(id));
+        return authorMapper.toDTO(foundAuthor);
     }
 
     private void verifyIfExists(String authorName) {
