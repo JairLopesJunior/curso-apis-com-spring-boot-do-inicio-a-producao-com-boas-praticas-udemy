@@ -1,12 +1,14 @@
 package com.jairlopes.bookstoremanager.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
+@AllArgsConstructor
 public class PublisherDTO {
 
     private Long id;
