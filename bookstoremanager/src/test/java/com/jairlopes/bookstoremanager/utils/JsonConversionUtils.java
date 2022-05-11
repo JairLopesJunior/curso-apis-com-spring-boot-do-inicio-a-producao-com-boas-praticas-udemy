@@ -8,7 +8,7 @@ import com.jairlopes.bookstoremanager.dto.AuthorDTO;
 
 public class JsonConversionUtils {
 
-    public static String asJsonString(AuthorDTO expectedCreatedAuthorDTO) {
+    public static String asJsonString(Object expectedCreatedAuthorDTO) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
