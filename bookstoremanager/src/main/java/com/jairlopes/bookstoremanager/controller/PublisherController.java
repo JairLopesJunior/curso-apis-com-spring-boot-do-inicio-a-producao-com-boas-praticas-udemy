@@ -3,6 +3,7 @@ package com.jairlopes.bookstoremanager.controller;
 import com.jairlopes.bookstoremanager.controller.docs.PublisherControllerDocs;
 import com.jairlopes.bookstoremanager.dto.PublisherDTO;
 import com.jairlopes.bookstoremanager.exception.PublisherAlreadyExistsException;
+import com.jairlopes.bookstoremanager.exception.PublisherNotFoundException;
 import com.jairlopes.bookstoremanager.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,5 +26,10 @@ public class PublisherController implements PublisherControllerDocs {
     @ResponseStatus(HttpStatus.CREATED)
     public PublisherDTO create(@RequestBody @Valid PublisherDTO publisherDTO) throws PublisherAlreadyExistsException {
         return this.publisherService.create(publisherDTO);
+    }
+
+    @GetMapping("/{id}")
+    public PublisherDTO findById(@PathVariable Long id) throws PublisherNotFoundException {
+        return publisherService.findById(id);
     }
 }

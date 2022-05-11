@@ -2,29 +2,26 @@ package com.jairlopes.bookstoremanager.controller;
 
 import com.jairlopes.bookstoremanager.builder.PublisherDTOBuilder;
 import com.jairlopes.bookstoremanager.dto.PublisherDTO;
-import com.jairlopes.bookstoremanager.exception.PublisherAlreadyExistsException;
 import com.jairlopes.bookstoremanager.service.PublisherService;
 import com.jairlopes.bookstoremanager.utils.JsonConversionUtils;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 public class PublisherControllerTest {
@@ -74,5 +71,21 @@ public class PublisherControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonConversionUtils.asJsonString(expectedCreatedPublisherDTO)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenGETWithValidIdIsCalledThenOkStatusShouldBeInformed() throws Exception {
+        PublisherDTO expectedCreatedPublisherDTO = publisherDTOBuilder.buildPublisherDTO();
+
+        Long expectedCreatedPublisherDTOId = expectedCreatedPublisherDTO.getId();
+        when(publisherService.findById(expectedCreatedPublisherDTOId)).thenReturn(expectedCreatedPublisherDTO);
+
+        mockMvc.perform(get(PUBLISHER_API_URL_PATH + "/" + expectedCreatedPublisherDTOId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonConversionUtils.asJsonString(expectedCreatedPublisherDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(expectedCreatedPublisherDTOId.intValue())))
+                .andExpect(jsonPath("$.name", is(expectedCreatedPublisherDTO.getName())))
+                .andExpect(jsonPath("$.code", is(expectedCreatedPublisherDTO.getCode())));
     }
 }
