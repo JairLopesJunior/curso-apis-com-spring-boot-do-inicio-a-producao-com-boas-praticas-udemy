@@ -46,11 +46,21 @@ public class PublisherService {
                 .collect(Collectors.toList());
     }
 
+    public void delete(Long id) throws PublisherNotFoundException {
+        verifyIfExists(id);
+        publisherRepository.deleteById(id);
+    }
+
     private void verifyIfExists(String name, String code) throws PublisherAlreadyExistsException {
         Optional<Publisher> publicatedPublisher = publisherRepository
                 .findByNameOrCode(name, code);
         if(publicatedPublisher.isPresent()){
             throw new PublisherAlreadyExistsException(name, code);
         }
+    }
+
+    private void verifyIfExists(Long id) throws PublisherNotFoundException {
+        publisherRepository.findById(id)
+                .orElseThrow(() -> new PublisherNotFoundException(id));
     }
 }
