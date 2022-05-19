@@ -4,7 +4,6 @@ import com.jairlopes.bookstoremanager.builder.UserDTOBuilder;
 import com.jairlopes.bookstoremanager.dto.MessageDTO;
 import com.jairlopes.bookstoremanager.dto.UserDTO;
 import com.jairlopes.bookstoremanager.service.UserService;
-import com.jairlopes.bookstoremanager.utils.JsonConversionUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,12 +13,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import static com.jairlopes.bookstoremanager.utils.JsonConversionUtils.asJsonString;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -56,9 +58,9 @@ public class UserControllerTest {
 
         when(userService.create(expectedUserToCreateDTO)).thenReturn(expectedCreationMessageDTO);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/users")
+        mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonConversionUtils.asJsonString(expectedUserToCreateDTO)))
+                .content(asJsonString(expectedUserToCreateDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.message", is(expectedCreationMessage)));
     }
@@ -68,9 +70,20 @@ public class UserControllerTest {
         UserDTO expectedUserToCreateDTO = userDTOBuilder.buildUserDTO();
         expectedUserToCreateDTO.setUsername(null);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/users")
+        mockMvc.perform(post("/api/v1/users")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonConversionUtils.asJsonString(expectedUserToCreateDTO)))
+                        .content(asJsonString(expectedUserToCreateDTO)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenDELETEIsCalledThenNoContentShouldBeInformed() throws Exception {
+        UserDTO expectedUserToDeledeDTO = userDTOBuilder.buildUserDTO();
+
+        doNothing().when(userService).delete(expectedUserToDeledeDTO.getId());
+
+        mockMvc.perform(delete("/api/v1/users/" + expectedUserToDeledeDTO.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
     }
 }
