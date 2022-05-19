@@ -5,6 +5,7 @@ import com.jairlopes.bookstoremanager.dto.MessageDTO;
 import com.jairlopes.bookstoremanager.dto.UserDTO;
 import com.jairlopes.bookstoremanager.entity.User;
 import com.jairlopes.bookstoremanager.exception.UserAlreadyExistsException;
+import com.jairlopes.bookstoremanager.exception.UserNotFoundException;
 import com.jairlopes.bookstoremanager.mapper.UserMapper;
 import com.jairlopes.bookstoremanager.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -21,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -71,4 +72,27 @@ public class UserServiceTest {
         assertThrows(UserAlreadyExistsException.class, () -> userService.create(expectedDuplicatedUserDTO));
     }
 
+    @Test
+    void whenValidUserIsInformedThenItShouldBeDeleted() {
+        UserDTO expectedDeleteUserDTO = userDTOBuilder.buildUserDTO();
+        User expectedDeleteUser = userMapper.toModel(expectedDeleteUserDTO);
+        var expectedDeletedUserId = expectedDeleteUserDTO.getId();
+
+        when(userRepository.findById(expectedDeletedUserId)).thenReturn(Optional.of(expectedDeleteUser));
+        doNothing().when(userRepository)
+                .deleteById(expectedDeletedUserId);
+
+        userService.delete(expectedDeletedUserId);
+        verify(userRepository, times(1)).deleteById(expectedDeletedUserId);
+    }
+
+    @Test
+    void whenInvalidUserIdIsInformedThenAnExceptionShouldBeThrown() {
+        UserDTO expectedDeletedUserDTO = userDTOBuilder.buildUserDTO();
+        var expectedDeletedUserId = expectedDeletedUserDTO.getId();
+
+        when(userRepository.findById(expectedDeletedUserId)).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class, () -> userService.delete(expectedDeletedUserId));
+    }
 }

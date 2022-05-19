@@ -4,6 +4,7 @@ import com.jairlopes.bookstoremanager.dto.MessageDTO;
 import com.jairlopes.bookstoremanager.dto.UserDTO;
 import com.jairlopes.bookstoremanager.entity.User;
 import com.jairlopes.bookstoremanager.exception.UserAlreadyExistsException;
+import com.jairlopes.bookstoremanager.exception.UserNotFoundException;
 import com.jairlopes.bookstoremanager.mapper.UserMapper;
 import com.jairlopes.bookstoremanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,12 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public void delete(Long id) {
+        userRepository.findById(id)
+                        .orElseThrow(() -> new UserNotFoundException(id));
+        userRepository.deleteById(id);
     }
 
     public MessageDTO create(UserDTO userToCreateDTO) {
