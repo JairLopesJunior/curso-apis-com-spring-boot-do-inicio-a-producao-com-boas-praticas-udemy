@@ -48,4 +48,30 @@ public class UserService {
                 .message(createdUserMessage)
                 .build();
     }
+
+    public MessageDTO update(Long id, UserDTO userToUpdateDTO) {
+        User foundUser = verifyAndGetIfExists(id);
+
+        userToUpdateDTO.setId(foundUser.getId());
+        User userToUpdate = userMapper.toModel(userToUpdateDTO);
+        userToUpdate.setCreatedDate(foundUser.getCreatedDate());
+
+        User updatedUser = userRepository.save(userToUpdate);
+        return updatedMessage(updatedUser);
+    }
+
+    private User verifyAndGetIfExists(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    private MessageDTO updatedMessage(User updatedUser) {
+        String createdUsername = updatedUser.getUsername();
+        Long createdId = updatedUser.getId();
+        String createdUserMessage = String.format("User %s with ID %s successfully updated", createdUsername, createdId);
+        return MessageDTO.builder()
+                .message(createdUserMessage)
+                .build();
+    }
+
 }
