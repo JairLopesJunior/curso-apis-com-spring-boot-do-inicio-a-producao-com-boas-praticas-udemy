@@ -1,0 +1,3 @@
+O que é Spring Security? Como ele está estruturado?
+
+É um framework que serve para proteger, autenticar e autorizar nossos recursos.
