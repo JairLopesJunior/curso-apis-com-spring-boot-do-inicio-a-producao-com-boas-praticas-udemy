@@ -8,9 +8,8 @@ import com.jairlopes.bookstoremanager.exception.UserNotFoundException;
 import com.jairlopes.bookstoremanager.mapper.UserMapper;
 import com.jairlopes.bookstoremanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -19,9 +18,12 @@ public class UserService {
 
     private UserRepository userRepository;
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void delete(Long id) {
@@ -39,6 +41,7 @@ public class UserService {
                 });
 
         User userToCreate = userMapper.toModel(userToCreateDTO);
+        userToCreate.setPassword(this.passwordEncoder.encode(userToCreate.getPassword()));
         User createdUser = userRepository.save(userToCreate);
 
         String createdUsername = createdUser.getUsername();
@@ -54,6 +57,7 @@ public class UserService {
 
         userToUpdateDTO.setId(foundUser.getId());
         User userToUpdate = userMapper.toModel(userToUpdateDTO);
+        userToUpdate.setPassword(this.passwordEncoder.encode(userToUpdate.getPassword()));
         userToUpdate.setCreatedDate(foundUser.getCreatedDate());
 
         User updatedUser = userRepository.save(userToUpdate);

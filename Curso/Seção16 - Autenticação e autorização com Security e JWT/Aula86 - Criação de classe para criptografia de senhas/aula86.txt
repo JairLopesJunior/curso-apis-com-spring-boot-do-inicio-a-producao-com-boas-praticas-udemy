@@ -1,0 +1,12 @@
+Criação de classe para criptografia de senhas de usuários
+
+@Configuration // Indica que é uma configuração do Spring.
+
+@Bean // É gerenciado pelo Spring
+
+Criar a Classe PasswordEncodingConfig e o seguinte metodo:
+
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}
