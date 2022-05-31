@@ -2,8 +2,12 @@ package com.jairlopes.bookstoremanager.builder;
 
 import com.jairlopes.bookstoremanager.dto.UserDTO;
 import com.jairlopes.bookstoremanager.enums.Gender;
+import com.jairlopes.bookstoremanager.enums.Role;
 import lombok.Builder;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Builder
@@ -33,6 +37,9 @@ public class UserDTOBuilder {
     @Builder.Default
     private LocalDate birthDate = LocalDate.of(1988, 3, 25);
 
+    @Builder.Default
+    private Role role = Role.USER;
+
     public UserDTO buildUserDTO() {
         return new UserDTO(id,
                 name,
@@ -41,7 +48,8 @@ public class UserDTOBuilder {
                 email,
                 username,
                 password,
-                birthDate);
+                birthDate,
+                role);
     }
 }
 
