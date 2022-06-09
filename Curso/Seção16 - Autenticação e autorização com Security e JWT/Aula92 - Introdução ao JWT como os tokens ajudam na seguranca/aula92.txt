@@ -1,0 +1,13 @@
+Introdução ao JWT: Como os tokens ajudam na segurança de APIs
+
+JWT (Json Web Token) = Serve para autenticar EndPoints e também para realizar a consulta dos dados para dados protegidos.
+
+O Token JWT é consistido por três partes:
+
+- A primeira é o Header (Cabeçalho) = Aqui é definido qual o algoritmo de codificação e o tipo do token.
+
+- A segunda parte é o Payload (Carga útil) = Esta parte contem o Subject que é quem o token esta se referindo, o nome da pessoa que esta enviando e 
+também a data que foi criada.
+
+- A terceira parte é o Verify Signature (Verificação da Assinatura) = Faz a verificação da assinatura, faz a codificação e decodificação e também podemos
+proteger com uma palavra secreta.
